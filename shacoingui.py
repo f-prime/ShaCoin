@@ -36,7 +36,7 @@ class ShaCoinUI:
                     c = str(c).split("e-")
                     om = int(c[1])-1
                     zeros = "0"*int(om)
-                    c = "0."+zeros+c[0]
+                    c = "0."+zeros+c[0].replace(".", '')
 
             totalcoins = config.db.find("coins", "all")
             if not totalcoins:
@@ -102,7 +102,7 @@ class ShaCoinUI:
 if __name__ == "__main__":
     if not config.wallet.find("data", "all"):
         shacoin.ShaCoin().firstrun()
-    thread.start_new_thread(ShaCoin.run, ())
+    thread.start_new_thread(shacoin.run, ())
     root = Tk()
     root.geometry("450x250+350+100")
     ShaCoinUI(root=root)
