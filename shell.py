@@ -47,7 +47,7 @@ class sc(cmd.Cmd):
                 c = str(c).split("e-")
                 om = int(c[1])-1
                 zeros = "0"*int(om)
-                c = "0."+zeros+c[0]
+                c = "0."+zeros+c[0].replace(".", '')
         print "You have "+str(c)+" coins."
 
     def do_addr(self, lines):
