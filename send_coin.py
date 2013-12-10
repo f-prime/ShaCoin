@@ -43,17 +43,11 @@ def send(address, amount):
         if total < amount:
             print "You have insufficient funds."
             return
-        amo = 0
-        for x in cc:
-            val = 1*10**(-12+x['difficulty'])
-            if amo < amount:
-                amo += val
-                cc.append(x)
-            else:
-                break
+        cc = sorted(cc, key=lambda x: x['difficulty'])
         transactionid = uuid.uuid4().hex
         sent_ = 0
         for x in cc:
+            print amount
             starter, hash_ = x['starter'], x['hash']
             starter = base64.b64encode(encrypt(decrypt(base64.b64decode(starter), my_key), key))
             out_s = {'cmd': 'send_coin',
@@ -70,6 +64,8 @@ def send(address, amount):
             send_command.send(out_s)
             sent_ += 1*10**(-12+x['difficulty'])
             print str(sent_)+" coins sent to "+address
+            if sent_ >= amount:
+                break
         print "Coins sent!"
 
 
