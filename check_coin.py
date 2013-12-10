@@ -39,8 +39,9 @@ def check_coin(obj, data):
                 while os.path.exists("db.lock"):
                     time.sleep(0.1)
                 open("db.lock", 'w').close()
-                config.db.insert("coins", {"starter":data['starter'], "hash":data['hash'], "address":data['address'], "difficulty":difficulty})
-                config.db.save()
+                for x in range(-4+difficulty):
+                    config.db.insert("coins", {"starter":data['starter'], "hash":data['hash'], "address":data['address'], "difficulty":difficulty})
+                    config.db.save()
                 os.remove("db.lock")
             else:
                 print "Invalid Coin!"

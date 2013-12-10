@@ -37,7 +37,7 @@ def send(address, amount):
         cc = config.db.find("coins", {"address":my_address})
         total = 0
         for x in cc:
-            val = 1*10**(-12+x['difficulty'])
+            val = 1*10**(-12+5)
             total += val
 
         if total < amount:
@@ -62,7 +62,7 @@ def send(address, amount):
                     }
 
             send_command.send(out_s)
-            sent_ += 1*10**(-12+x['difficulty'])
+            sent_ += 1*10**(-12+5)
             print str(sent_)+" coins sent to "+address
             if sent_ >= amount:
                 break
