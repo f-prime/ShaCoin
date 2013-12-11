@@ -113,7 +113,8 @@ class sc(cmd.Cmd):
                 try:
                     coincounts[coin['address']] += 1
                 except:
-                    coincounts[coin['address']] = 1
+                    if coin.has_key('address'):
+                        coincounts[coin['address']] = 1
             for tran in trans:
                 try:
                     recievercounts[tran['to']] += tran['amount']
