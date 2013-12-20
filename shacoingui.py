@@ -6,7 +6,7 @@ import time
 import tkMessageBox
 import shacoin
 
-class ShaCoinUI:
+class zCoinUI:
 
     def __init__(self, root):
         self.root = root
@@ -25,26 +25,16 @@ class ShaCoinUI:
         while True:
             
             coins = config.db.find("coins", {"address":config.wallet.find("data", "all")[0]['address']})
-            c = 0
             if not coins:
-                c = 0
-            else:
-                for diff in coins: 
-                    diff = diff['difficulty']
-                    c += 1*10**(-12+diff)
-                if "e" in str(c):
-                    c = str(c).split("e-")
-                    om = int(c[1])-1
-                    zeros = "0"*int(om)
-                    c = "0."+zeros+c[0].replace(".", '')
-
+                coins = []
+            coins = len(coins)*0.0001
             totalcoins = config.db.find("coins", "all")
             if not totalcoins:
                 totalcoins = []
             totalcoins = len(totalcoins)
             addr = config.wallet.find("data", "all")[0]['address']
             self.addr_.set(addr)
-            self.c.set(c)
+            self.c.set(coins)
             self.t.set(totalcoins)
             time.sleep(10)
     
@@ -101,10 +91,10 @@ class ShaCoinUI:
 
 if __name__ == "__main__":
     if not config.wallet.find("data", "all"):
-        shacoin.ShaCoin().firstrun()
-    thread.start_new_thread(shacoin.run, ())
+        shacoin.zCoin().firstrun()
+    thread.start_new_thread(zcoin.run, ())
     root = Tk()
     root.geometry("450x250+350+100")
-    ShaCoinUI(root=root)
-    root.title("ShaCoin Client")
+    zCoinUI(root=root)
+    root.title("zCoin Client")
     root.mainloop()

@@ -39,7 +39,7 @@ def check_coin(obj, data):
                 while os.path.exists("db.lock"):
                     time.sleep(0.1)
                 open("db.lock", 'w').close()
-                for x in range((difficulty-5)*10 + 1):
+                for x in range((difficulty-6)*7):
                     config.db.insert("coins", {"starter":data['starter'], "hash":data['hash'], "address":data['address'], "difficulty":difficulty})
                     config.db.save()
                 os.remove("db.lock")

@@ -5,11 +5,10 @@ import threading
 import urllib
 import get_db
 import operator
-import decimal
 
-class sc(cmd.Cmd):
-    prompt = "ShaShell$ "
-    intro = "Welcome to the Shacoin shell, type `help` to get started."
+class zc(cmd.Cmd):
+    prompt = "zShell$ "
+    intro = "Welcome to the zCoin shell, type `help` to get started."
     def do_send(self, line):
         line = line.split()
         try:
@@ -35,20 +34,16 @@ class sc(cmd.Cmd):
     def do_coins(self, line):
         addr = config.wallet.find("data", "all")[0]
         addr = addr['address']
-        coins = config.db.find("coins", {"address":addr})
-        c = 0
+        coins_ = config.db.find("coins", "all")
+        coins = []
+        for x in coins_:
+            if x['address'] == addr:
+                coins.append(x)
         if not coins:
-            c = 0
+            coins = 0
         else:
-            for diff in coins: 
-                diff = diff['difficulty']
-                c += 1*10**(-12+diff)
-            if "e" in str(c):
-                c = str(c).split("e-")
-                om = int(c[1])-1
-                zeros = "0"*int(om)
-                c = "0."+zeros+c[0].replace(".", '')
-        print "You have "+str(c)+" coins."
+            coins = len(coins) * 0.0001
+        print "You have "+str(coins)+" coins."
 
     def do_addr(self, lines):
         addr = config.wallet.find("data", "all")[0]['address']
@@ -75,21 +70,21 @@ class sc(cmd.Cmd):
 
     def do_update(self, line):
         files = {
-            "check_coin.py":"https://raw.github.com/Max00355/ShaCoin/master/check_coin.py",
-            "coin_count.py":"https://raw.github.com/Max00355/ShaCoin/master/coin_count.py",
-            "config.py":"https://raw.github.com/Max00355/ShaCoin/master/config.py",
-            "get_db.py":"https://raw.github.com/Max00355/ShaCoin/master/get_db.py",
-            "get_difficulty.py":"https://raw.github.com/Max00355/ShaCoin/master/get_difficulty.py",
-            "get_nodes.py":"https://raw.github.com/Max00355/ShaCoin/master/get_nodes.py",
-            "get_version.py":"https://raw.github.com/Max00355/ShaCoin/master/get_version.py",
-            "landerdb.py":"https://raw.github.com/Max00355/ShaCoin/master/landerdb.py",
-            "miner.py":"https://raw.github.com/Max00355/ShaCoin/master/miner.py",
-            "register.py":"https://raw.github.com/Max00355/ShaCoin/master/register.py",
-            "send_coin.py":"https://raw.github.com/Max00355/ShaCoin/master/send_coin.py",
-            "send_command.py":"https://raw.github.com/Max00355/ShaCoin/master/send_command.py",
-            "shell.py":"https://raw.github.com/Max00355/ShaCoin/master/shell.py",
-            "shacoin.py":"https://raw.github.com/Max00355/ShaCoin/master/shacoin.py",
-            
+            "check_coin.py":"https://raw.github.com/Max00355/zCoin/master/check_coin.py",
+            "coin_count.py":"https://raw.github.com/Max00355/zCoin/master/coin_count.py",
+            "config.py":"https://raw.github.com/Max00355/zCoin/master/config.py",
+            "get_db.py":"https://raw.github.com/Max00355/zCoin/master/get_db.py",
+            "get_difficulty.py":"https://raw.github.com/Max00355/zCoin/master/get_difficulty.py",
+            "get_nodes.py":"https://raw.github.com/Max00355/zCoin/master/get_nodes.py",
+            "get_version.py":"https://raw.github.com/Max00355/zCoin/master/get_version.py",
+            "landerdb.py":"https://raw.github.com/Max00355/zCoin/master/landerdb.py",
+            "miner.py":"https://raw.github.com/Max00355/zCoin/master/miner.py",
+            "register.py":"https://raw.github.com/Max00355/zCoin/master/register.py",
+            "send_coin.py":"https://raw.github.com/Max00355/zCoin/master/send_coin.py",
+            "send_command.py":"https://raw.github.com/Max00355/zCoin/master/send_command.py",
+            "shell.py":"https://raw.github.com/Max00355/zCoin/master/shell.py",
+            "zcoin.py":"https://raw.github.com/Max00355/zCoin/master/zcoin.py",
+
         }
 
         for x in files:
@@ -137,7 +132,7 @@ class sc(cmd.Cmd):
     def do_help(self, line):
         print """
             
-            Welcome to the ShaCoin shell
+            Welcome to the zCoin shell
 
             send <to> <amount> - Send coins to an address
             coins - Shows the amount of coins you currently own
@@ -151,4 +146,4 @@ class sc(cmd.Cmd):
         """
 
 if __name__ == "__main__":
-    sc().cmdloop()
+    zc().cmdloop()

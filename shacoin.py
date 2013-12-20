@@ -15,7 +15,7 @@ import get_difficulty
 import check_coin
 import send_coin
 
-class ShaCoin:
+class zCoin:
     def __init__(self):
         self.cmds = {
 
@@ -65,7 +65,7 @@ class ShaCoin:
             obj, conn = sock.accept()
             thread.start_new_thread(self.handle, (obj, conn[0]))
     def handle(self, obj, ip):
-        data = obj.recv(9990000)
+        data = obj.recv(10240)
         if data:
             try:
                 data = json.loads(data)
@@ -90,7 +90,7 @@ class ShaCoin:
             time.sleep(60)
 
 def run():
-    zc = ShaCoin()
+    zc = zCoin()
     check = config.nodes.find("nodes", "all")
     if not check:
         zc.firstrun()

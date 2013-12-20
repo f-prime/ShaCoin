@@ -22,6 +22,7 @@ def send(god=False):
     for x in nodes:
         s = socket.socket()
         try:
+            s.settimeout(10)
             s.connect((x['ip'], x['port']))
         except:
             s.close()
@@ -33,6 +34,7 @@ def send(god=False):
                 s.close()
                 s = socket.socket()
                 try:
+                    s.settimeout(10)
                     s.connect((x['ip'], x['port']))
                 except:
                     s.close()
