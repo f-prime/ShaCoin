@@ -57,6 +57,7 @@ def send(address, amount):
                     "amount_sent":amount,
                     "plain":x['starter'],
                     "difficulty":x['difficulty'],
+                    "id":x['id'],
                     }
 
             send_command.send(out_s)
@@ -76,11 +77,11 @@ def send_coin(obj, data):
     while os.path.exists("db.lock"):
         time.sleep(0.1)
     open("db.lock", 'w').close()
-    check = config.db.find("coins", {"hash":data['hash']})
+    check = config.db.find("coins", {"hash":data['id']})
     for x in check:
         config.db.remove("coins", x)
         config.db.save()
-    config.db.insert("coins",{"address":data['for'], "starter":data['starter'], "hash":data['hash'], "difficulty":data['difficulty']})
+    config.db.insert("coins",{"address":data['for'], "starter":data['starter'], "hash":data['hash'], "difficulty":data['difficulty'], "id":data['id']})
     config.db.save()
     os.remove("db.lock")
 
