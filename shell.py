@@ -36,11 +36,11 @@ class zc(cmd.Cmd):
         addr = addr['address']
         coins_ = config.db.find("coins", "all")
         coins = []
+        if not coins:
+            coins_ = []
         for x in coins_:
             if x['address'] == addr:
                 coins.append(x)
-        if not coins:
-            coins = 0
         else:
             coins = len(coins) * 0.0001
         print "You have "+str(coins)+" coins."
