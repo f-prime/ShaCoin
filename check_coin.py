@@ -7,6 +7,7 @@ import config
 import hashlib
 import re
 import base64
+import uuid
 
 def check_coin(obj, data):
     """
@@ -40,7 +41,7 @@ def check_coin(obj, data):
                     time.sleep(0.1)
                 open("db.lock", 'w').close()
                 for x in range((difficulty-6)*7):
-                    config.db.insert("coins", {"starter":data['starter'], "hash":data['hash'], "address":data['address'], "difficulty":difficulty})
+                    config.db.insert("coins", {"starter":data['starter'], "hash":data['hash'], "address":data['address'], "difficulty":difficultyi, "id":uuid.uuid4().hex})
                     config.db.save()
                 os.remove("db.lock")
             else:
