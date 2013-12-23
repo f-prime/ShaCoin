@@ -96,5 +96,5 @@ if __name__ == "__main__":
     root = Tk()
     root.geometry("450x250+350+100")
     zCoinUI(root=root)
-    root.title("zCoin Client")
+    root.title("ShaCoin Client")
     root.mainloop()
